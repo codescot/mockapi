@@ -1,0 +1,5 @@
+Place .json files with your data.
+
+The paths will determine api endpoints, e.g. :
+
+> mock/users/all.json will be http://localhost:9000/users/all
