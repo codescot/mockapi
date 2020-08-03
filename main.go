@@ -15,22 +15,18 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.Default())
 
-	filepath.Walk("mock", func(path string, info os.FileInfo, err error) error {
+	filepath.Walk("api", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
 
 		if strings.HasSuffix(path, ".json") {
-			file := make(map[string]interface{})
-			fileio.ReadJSON(path, &file)
-
-			if err != nil {
-				return err
-			}
-
 			route := path[4 : len(path)-5]
 
 			r.GET(route, func(ctx *gin.Context) {
+				file := make(map[string]interface{})
+				fileio.ReadJSON(path, &file)
+
 				ctx.JSON(http.StatusOK, file)
 			})
 		}
